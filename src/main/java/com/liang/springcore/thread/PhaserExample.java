@@ -4,7 +4,7 @@ import java.util.concurrent.Phaser;
 
 public class PhaserExample {
     private static final int WORKERS = 3;
-    private static final int PHASES = 3;
+    private static final int PHASES = 10;
 
     public static void main(String[] args) {
         Phaser phaser = new Phaser();
@@ -17,7 +17,7 @@ public class PhaserExample {
             int id = i;
             new Thread(() -> {
                 for (int phase = 0; phase < PHASES; phase++) {
-                    System.out.println("Worker " + id + " working in phase " + phase);
+                    System.out.println("Worker " + id + " working in phase " + phaser.getPhase());
                     try {
                         Thread.sleep((long) (Math.random() * 1000));
                     } catch (InterruptedException e) {
@@ -35,6 +35,7 @@ public class PhaserExample {
 
         // Wait for all phases to complete
         for (int phase = 0; phase < PHASES; phase++) {
+            System.out.println("main thread in phase " + phaser.getPhase() + "\n");
             phaser.arriveAndAwaitAdvance(); // Main thread waits too
             System.out.println("===> Phase " + phase + " complete\n");
         }
