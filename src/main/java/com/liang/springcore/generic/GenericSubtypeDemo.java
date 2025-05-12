@@ -69,8 +69,19 @@ public class GenericSubtypeDemo {
     }
 
     public static void main(String[] args) {
-        GenericSubtypeDemo demo = new GenericSubtypeDemo();
-        demo.tryGenericSubtype();
+        List<Integer> integerList = new ArrayList<>();
+        integerList.add(1);
+        integerList.add(2);
+
+        List<? super Number> listContainNumberNParents =new ArrayList<>();
+        Integer integer1 = Integer.valueOf(10);
+        listContainNumberNParents.add(integer1);
+        System.out.println(listContainNumberNParents);
+
+        //addNumbers(integerList);
+
+        //GenericSubtypeDemo demo = new GenericSubtypeDemo();
+        //demo.tryGenericSubtype();
 
 
     }
@@ -93,8 +104,13 @@ public class GenericSubtypeDemo {
         List<? super Integer> listContainIntegerNParents;
         List<? super Number> listContainNumberNParents;
         List<Number> numberList = new ArrayList<>();
-        numberList.add(3);
-        numberList.add(4);
+        Integer integer1 = Integer.valueOf(10);
+
+        listContainNumberNParents = new ArrayList<>();
+        listContainNumberNParents.add(integer1);
+
+        numberList.add(integer1);
+        //numberList.add(4);
         listContainNumberNParents = numberList;
         listContainIntegerNParents = listContainNumberNParents;
         oldest = listContainIntegerNParents;
@@ -103,4 +119,11 @@ public class GenericSubtypeDemo {
         listContainIntegerNParents = objectList;
         System.out.println(listContainIntegerNParents);
     }
+
+    public static void addNumbers(List<? super Number> list) {
+        for (int i = 1; i <= 10; i++) {
+            list.add(i);
+        }
+    }
+
 }
