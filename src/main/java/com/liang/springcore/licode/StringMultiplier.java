@@ -1,4 +1,4 @@
-package com.liang.springcore.leetcode;
+package com.liang.springcore.licode;
 
 public class StringMultiplier {
     public static void main(String[] args) {

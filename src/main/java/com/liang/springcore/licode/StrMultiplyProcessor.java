@@ -1,4 +1,4 @@
-package com.liang.springcore.leetcode;
+package com.liang.springcore.licode;
 
 import java.util.ArrayList;
 

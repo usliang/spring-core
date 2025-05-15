@@ -1,8 +1,7 @@
-package com.liang.springcore.leetcode;
+package com.liang.springcore.licode;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 public class FindSum {
