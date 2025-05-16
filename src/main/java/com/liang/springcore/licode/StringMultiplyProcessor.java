@@ -19,7 +19,7 @@ class StringMultiplyProcessor {
         ArrayList<Integer> answer = new ArrayList<>(
                 results.get(results.size() - 1)
         );
-        ArrayList<Integer> newAnswer = new ArrayList<>();
+        ArrayList<Integer> newAnswer;
 
         // Sum each digit from answer and result
         for (int j = 0; j < results.size() - 1; ++j) {

@@ -9,8 +9,8 @@ import java.util.List;
 public class StrMultiplyProcessor {
     public static void main(String[] args) {
         StrMultiplyProcessor strMultiplyProcessor = new StrMultiplyProcessor();
-        String str1 = "999";
-        String str2 = "99";
+        String str1 = "100";
+        String str2 = "50";
         //String str3 = stringMultiplier.add(str1, str2);
         //System.out.println(str3);
         String str3 = strMultiplyProcessor.multiply(str1, str2);
@@ -18,42 +18,36 @@ public class StrMultiplyProcessor {
 
     }
     public  String multiply(String a, String b) {
-        List<Integer> list1 = toList(a);
-        List<Integer> list2 = toList(b);
 
-        if (list1.size() ==1 && list1.get(0) == 0) {
+
+        if (a.equalsIgnoreCase("0") || b.equalsIgnoreCase("0")) {
             return "0";
         }
-        if (list2.size() ==1 && list2.get(0) == 0) {
-            return "0";
-        }
-        List<Integer> shortList, longList;
-        if (list1.size() < list2.size()) {
-            shortList = list1;
-            longList = list2;
+
+        String shortList, longList;
+        if (a.length() < b.length()) {
+            shortList = a;
+            longList = b;
         } else {
-            shortList = list2;
-            longList = list1;
+            shortList = b;
+            longList = a;
         }
-        List<List<Integer>> results = new ArrayList<>(shortList.size());
-        for (int i = 0; i < shortList.size(); i++) {
-            List<Integer> oneDigitProduct = multiplyByOneDigit(longList, shortList.get(i), i);
-            results.add(oneDigitProduct);
+        StringBuilder firstNumber = new StringBuilder(longList);
+        StringBuilder secondNumber = new StringBuilder(shortList);
+
+        // Reverse both the numbers.
+        firstNumber.reverse();
+        secondNumber.reverse();
+        List<List<Integer>> results = new ArrayList<>(secondNumber.length());
+        for (int i = 0; i < secondNumber.length(); i++) {
+            results.add(multiplyByOneDigit(firstNumber, secondNumber.charAt(i), i));
         }
         return sumResults(results);
     }
 
-    public List<Integer> toList(String string) {
-        StringBuilder stringBuilder = new StringBuilder(string);
-        stringBuilder.reverse();
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0; i < stringBuilder.length(); i++) {
-            list.add(Integer.parseInt(stringBuilder.substring(i, i + 1)));
-        }
-        return list;
-    }
 
-    public List<Integer> multiplyByOneDigit(List<Integer> integerList,  int digits, int position) {
+
+    public List<Integer> multiplyByOneDigit(final StringBuilder integerList, final char digits, final int position) {
         ArrayList<Integer> result = new ArrayList<>();
 
         if (digits == 0) {
@@ -66,8 +60,8 @@ public class StrMultiplyProcessor {
             result.add(0);
         }
         int carry = 0;
-        for (int i = 0; i < integerList.size(); i++) {
-            int product = integerList.get(i) * digits + carry;
+        for (int i = 0; i < integerList.length(); i++) {
+            int product = (integerList.charAt(i) - '0') * (digits - '0') + carry;
             carry = product / 10;
             result.add(product % 10);
         }
@@ -90,7 +84,7 @@ public class StrMultiplyProcessor {
                 current.add(sum % 10);
            }
            if (carry > 0) {
-               answer.add(carry);
+               current.add(carry);
            }
            answer = current;
         }
