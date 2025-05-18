@@ -19,7 +19,6 @@ public class StrMultiplyProcessor {
     }
     public  String multiply(String a, String b) {
 
-
         if (a.equalsIgnoreCase("0") || b.equalsIgnoreCase("0")) {
             return "0";
         }
