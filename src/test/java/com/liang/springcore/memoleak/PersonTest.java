@@ -1,4 +1,4 @@
-package com.liang.springcore.memeleak;
+package com.liang.springcore.memoleak;
 
 import org.junit.jupiter.api.Test;
 

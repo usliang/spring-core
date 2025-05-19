@@ -1,5 +1,7 @@
 package com.liang.springcore.licode;
 
+import java.util.Stack;
+
 public class LongestPalindrome {
     public static String longestPalindrome(String s) {
         if (s == null || s.length() < 1) return "";
@@ -29,6 +31,9 @@ public class LongestPalindrome {
     }
 
     public static void main(String[] args) {
+        String s = isBalanced("{}");
+        System.out.println(s);
+        /*
         String input = "aaaaaa";
         int times = 1;
         long start = System.currentTimeMillis();
@@ -37,5 +42,34 @@ public class LongestPalindrome {
         }
         long end = System.currentTimeMillis();
         System.out.println(end - start);
+
+         */
+    }
+
+    static String isBalanced(String s)
+    {
+        String result = "true";
+        if (s.isEmpty()) {
+            return result;
+        }
+        Stack<String> stack = new Stack<>();
+        for (int i=0; i< s.length(); i++) {
+            if ((s.substring(i, i + 1).equalsIgnoreCase("{")) || (s.substring(i, i + 1).equalsIgnoreCase("(") )) {
+                stack.push(s.substring(i, i+1));
+            } else {
+                if (!stack.isEmpty()) {
+                    String left = stack.pop();
+                    if (!left.equalsIgnoreCase(s.substring(i, i+1))) {
+                        result = "false";
+                        break;
+                    }
+                } else {
+                    result = "false";
+                    break;
+                }
+            }
+        }
+        return result;
+
     }
 }

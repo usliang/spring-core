@@ -1,4 +1,4 @@
-package com.liang.springcore.memeleak;
+package com.liang.springcore.memoleak;
 
 public class Person {
     public String name;
