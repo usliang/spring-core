@@ -12,6 +12,26 @@ import java.util.regex.*;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
+        //2();
+        Scanner in = new Scanner(System.in);
+        int t = in.nextInt();
+        List<Integer> integerList = new ArrayList<>();
+        for (int i = 0; i < t; i++) {
+            integerList.add(in.nextInt());
+        }
+
+        System.out.println(integerList);
+    }
+    private static void printSequence(int a, int b, int n) {
+        int next = a + b;
+        System.out.print(next + " ");
+        for (int i = 1; i < n-1; i++) {
+            next += (int) Math.pow(2, i) * b;
+            System.out.print(next + " ");
+        }
+        System.out.println(next + (int)Math.pow(2, n-1) * b);
+    }
+    private void s1() {
         Scanner in = new Scanner(System.in);
         int t=in.nextInt();
         for(int i=0;i<t;i++){
@@ -22,13 +42,49 @@ public class Solution {
         }
         in.close();
     }
-    private static void printSequence(int a, int b, int n) {
-        int next = a + b;
-        System.out.print(next + " ");
-        for (int i = 1; i < n-1; i++) {
-            next += (int) Math.pow(2, i) * b;
-            System.out.print(next + " ");
+    private static void s2() {
+        System.out.printf("please input total of lines%n");
+        Scanner in = new Scanner(System.in);
+        int line = in.nextInt();
+        System.out.printf("Need to input %d lines of numbers%n", line);
+        List<List<Integer>> lines = new ArrayList<>(line);
+        for(int i=1;i<line + 1;i++){
+            System.out.printf("please input total number in line no: %d%n", i);
+            int numberInTheLine = in.nextInt();
+            System.out.printf("There will be %d in line %d%n", numberInTheLine, i);
+            List<Integer> list = new ArrayList<>(numberInTheLine);
+            for(int j=0;j<numberInTheLine;j++){
+                System.out.printf("please input number for line %d %n", j + 1);
+                list.add(in.nextInt());
+            }
+            lines.add(list);
         }
-        System.out.println(next + (int)Math.pow(2, n-1) * b);
+
+        //handle query input
+        System.out.println("please input the query count%n");
+        int queryCount = in.nextInt();
+        List<List<Integer>> query = new ArrayList<>(queryCount); //each query holds x andy two number
+
+        for(int i=0;i<queryCount;i++){
+            List<Integer> list = new ArrayList<>(in.nextInt());
+            System.out.printf("please input query  %d s%n", i + 1);
+            int x = in.nextInt();
+            int y = in.nextInt();
+            list.add(x);
+            list.add(y);
+            query.add(list);
+        }
+
+        //print out by query
+        for(int i=0;i<queryCount;i++){
+            int x = query.get(i).get(0);
+            int y = query.get(i).get(1);
+            Integer result = lines.get(x).get(y);
+            if (result != null) {
+                System.out.println(result);
+            } else {
+                System.out.println("ERROR!");
+            }
+        }
     }
 }
