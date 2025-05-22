@@ -12,7 +12,8 @@ import java.util.regex.*;
 
 public class Solution {
     public static void main(String[] args) throws IOException {
-        //2();
+        s2();
+        /*
         Scanner in = new Scanner(System.in);
         int t = in.nextInt();
         List<Integer> integerList = new ArrayList<>();
@@ -21,6 +22,8 @@ public class Solution {
         }
 
         System.out.println(integerList);
+
+         */
     }
     private static void printSequence(int a, int b, int n) {
         int next = a + b;
@@ -48,26 +51,24 @@ public class Solution {
         int line = in.nextInt();
         System.out.printf("Need to input %d lines of numbers%n", line);
         List<List<Integer>> lines = new ArrayList<>(line);
-        for(int i=1;i<line + 1;i++){
-            System.out.printf("please input total number in line no: %d%n", i);
+        for(int i=1;i<line + 1; i++){
+            System.out.printf("please input number for line %d. The first number is the total numbers in this line %n", i);
             int numberInTheLine = in.nextInt();
-            System.out.printf("There will be %d in line %d%n", numberInTheLine, i);
             List<Integer> list = new ArrayList<>(numberInTheLine);
             for(int j=0;j<numberInTheLine;j++){
-                System.out.printf("please input number for line %d %n", j + 1);
                 list.add(in.nextInt());
             }
             lines.add(list);
         }
 
         //handle query input
-        System.out.println("please input the query count%n");
+        System.out.println("please input the query count");
         int queryCount = in.nextInt();
         List<List<Integer>> query = new ArrayList<>(queryCount); //each query holds x andy two number
 
         for(int i=0;i<queryCount;i++){
-            List<Integer> list = new ArrayList<>(in.nextInt());
-            System.out.printf("please input query  %d s%n", i + 1);
+            List<Integer> list = new ArrayList<>(2);
+            System.out.printf("please input query #  %d%n", i + 1);
             int x = in.nextInt();
             int y = in.nextInt();
             list.add(x);
@@ -79,7 +80,7 @@ public class Solution {
         for(int i=0;i<queryCount;i++){
             int x = query.get(i).get(0);
             int y = query.get(i).get(1);
-            Integer result = lines.get(x).get(y);
+            Integer result = lines.get(x-1).get(y-1);
             if (result != null) {
                 System.out.println(result);
             } else {
