@@ -23,6 +23,9 @@ public class ReverseInteger {
     }
     public int reverse(int x) {
         //
+        if (x == 0) {
+            return 0;
+        }
 
         boolean negative = false;
         if (x < 0) {

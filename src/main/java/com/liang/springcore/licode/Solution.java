@@ -46,13 +46,13 @@ public class Solution {
         in.close();
     }
     private static void s2() {
-        System.out.printf("please input total of lines%n");
+        //System.out.printf("please input total of lines%n");
         Scanner in = new Scanner(System.in);
         int line = in.nextInt();
-        System.out.printf("Need to input %d lines of numbers%n", line);
+        //System.out.printf("Need to input %d lines of numbers%n", line);
         List<List<Integer>> lines = new ArrayList<>(line);
         for(int i=1;i<line + 1; i++){
-            System.out.printf("please input number for line %d. The first number is the total numbers in this line %n", i);
+            //System.out.printf("please input number for line %d. The first number is the total numbers in this line %n", i);
             int numberInTheLine = in.nextInt();
             List<Integer> list = new ArrayList<>(numberInTheLine);
             for(int j=0;j<numberInTheLine;j++){
@@ -62,13 +62,13 @@ public class Solution {
         }
 
         //handle query input
-        System.out.println("please input the query count");
+        //System.out.println("please input the query count");
         int queryCount = in.nextInt();
         List<List<Integer>> query = new ArrayList<>(queryCount); //each query holds x andy two number
 
         for(int i=0;i<queryCount;i++){
             List<Integer> list = new ArrayList<>(2);
-            System.out.printf("please input query #  %d%n", i + 1);
+            //System.out.printf("please input query #  %d%n", i + 1);
             int x = in.nextInt();
             int y = in.nextInt();
             list.add(x);
@@ -80,9 +80,14 @@ public class Solution {
         for(int i=0;i<queryCount;i++){
             int x = query.get(i).get(0);
             int y = query.get(i).get(1);
-            Integer result = lines.get(x-1).get(y-1);
-            if (result != null) {
-                System.out.println(result);
+
+            if ((x -1) < lines.size() && (y -1) < lines.get(x-1).size()) {
+                Integer result = lines.get(x - 1).get(y - 1);
+                if (result != null) {
+                    System.out.println(result);
+                } else {
+                    System.out.println("ERROR!");
+                }
             } else {
                 System.out.println("ERROR!");
             }
