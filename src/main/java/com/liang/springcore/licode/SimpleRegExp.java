@@ -142,30 +142,22 @@ public class SimpleRegExp {
         }
         if (p.length() > 1 ) {
             if (p.charAt(1) == '*' ) {
-                if (p.charAt(0) == '.') {
-                    for (int i = 0; i <= s.length(); i++) {
-                        if (isMatch(s.substring(i), p.substring(2))) {
+                int signCount = countSign(p.substring(2));
+                int diff = s.length() - p.substring(2).length() + 2 * signCount;
+                if (diff < 0) {
+                    return false;
+                } else {
+                    StringBuilder added = new StringBuilder(p.substring(2));
+                    for (int i = 0; i <= diff; i++) {
+                        if (isMatch(s, added.toString())) {
                             return true;
+                        } else {
+                            added.insert(0, p.charAt(0));
                         }
                     }
                     return false;
-                } else {
-                    int signCount = countSign(p.substring(2));
-                    int diff = s.length() - p.substring(2).length() + 2 * signCount;
-                    if (diff < 0) {
-                        return false;
-                    } else {
-                        StringBuilder added = new StringBuilder(p.substring(2));
-                        for (int i = 0; i <= diff; i++) {
-                            if (isMatch(s, added.toString())) {
-                                return true;
-                            } else {
-                                 added.insert(0, p.charAt(0));
-                            }
-                        }
-                        return false;
-                    }
                 }
+
             } else { //p.length >=2 and p.chatAt(1) != "*"
                 if (s.isEmpty()) {
                     return false;
@@ -176,7 +168,7 @@ public class SimpleRegExp {
                         if (s.length() > 1) {
                             return isMatch(s.substring(1), p.substring(1));
                         } else { //s.length == 1
-                            if (p.length() == 3 && p.charAt(2) == '*') {
+                            if (p.length() == 3 && p.charAt(2) == '*') { //s=a pattern= ab*
                                 return true;
                             } else {
                                 return false;
