@@ -1,14 +1,24 @@
 package com.liang.springcore.licode;
 
+import java.util.Objects;
 import java.util.Stack;
 
 public class SimpleRegExp {
     public static void main(String[] args) {
+
         SimpleRegExp sr = new SimpleRegExp();
+
         String str ;
         String pattern;
 
-        /*
+        str = "aaaaaaaaaaaaaaaaaaab";
+        pattern = "a*a*a*a*a*a*a*a*a*a*";
+        assert(!sr.isMatch(str, pattern));
+
+        str= "acabacbaaabacba";
+        pattern = "bc*c*.b*b*.*a*a*.*";
+        assert(!sr.isMatch(str, pattern));
+
         str = "a";
         pattern = "a";
         assert(sr.isMatch(str, pattern));
@@ -105,22 +115,61 @@ public class SimpleRegExp {
         pattern = ".*a*aa*.*b*.c*.*a*";
         assert(sr.isMatch(str, pattern));
 
-         */
+
         str = "cbaacacaaccbaabcb";
-        pattern = "c*b*b*.*ac*.*bc*a*"; //"c*b*b*.*ac*.*bc*a*"
+        pattern = "c*b*b*.*ac*.*bc*a*";
         assert(sr.isMatch(str, pattern));
+
+
+        //b!=bc*a*
+        str = "b";
+        pattern = "bc*a*";
+        assert(sr.isMatch(str, pattern));
+
     }
-    public boolean isRepeatedAnyMatch(String pattern) {
-        if (pattern == null || pattern.isEmpty()) {
-            return false;
+    public boolean isAnyMatch(String pattern) {
+        return pattern.equalsIgnoreCase(".*");
+    }
+    public String removeUnneededAnyMatch(String pattern) {
+        if (pattern.length() < 4) {
+            return pattern;
         }
-        if (pattern.length() % 2 == 1) {
-            return false;
+        StringBuilder sb = new StringBuilder();
+        int index = 0;
+        while (index < pattern.length() -2) {
+            if (pattern.charAt(index + 1) != '*') {
+                sb.append(pattern.charAt(index));
+                index++;
+            } else { //index + 1 = *
+                sb.append(pattern.charAt(index));
+                sb.append(pattern.charAt(index + 1)); //append *
+                String substring = pattern.substring(index + 2);
+                StringBuilder cut = new StringBuilder();
+                while (removeFromHead(substring, pattern.charAt(index), pattern.charAt(index + 1), cut)){
+                    substring = cut.toString();
+                    cut.setLength(0); //delete all
+                    index = index + 2;
+                }
+                //move index forward
+                index = index + 2;
+            }
         }
-        if (pattern.equalsIgnoreCase(".*")) {
-            return true;
+        for (int i = index; i < pattern.length(); i++) {
+            sb.append(pattern.charAt(i));
+        }
+        return sb.toString();
+    }
+
+    public boolean removeFromHead(String source, char firstChar, char secondChar, StringBuilder builder ) {
+        if (source.length() < 2) {
+            return false;
         } else {
-            return isRepeatedAnyMatch(pattern.substring(2));
+            if (source.charAt(0) == firstChar && source.charAt(1) == secondChar) {
+                builder.append(source.substring(2));
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -134,22 +183,27 @@ public class SimpleRegExp {
         return result;
     }
 
-    public boolean isMatch(String s, String p) {
+    public boolean isMatchMe(String s, String p) {
         System.out.println("s=" + s);
         System.out.println("pattern= " + p);
-        if (isRepeatedAnyMatch(p)) {
+        p = removeUnneededAnyMatch(p);
+
+        if (isAnyMatch(p)) {
             return true;
         }
+
         if (p.length() > 1 ) {
             if (p.charAt(1) == '*' ) {
                 int signCount = countSign(p.substring(2));
                 int diff = s.length() - p.substring(2).length() + 2 * signCount;
                 if (diff < 0) {
+                    System.out.println(s + "!=" + p);
                     return false;
                 } else {
                     StringBuilder added = new StringBuilder(p.substring(2));
                     for (int i = 0; i <= diff; i++) {
                         if (isMatch(s, added.toString())) {
+                            System.out.println(s + "==" + added.toString());
                             return true;
                         } else {
                             added.insert(0, p.charAt(0));
@@ -160,32 +214,29 @@ public class SimpleRegExp {
 
             } else { //p.length >=2 and p.chatAt(1) != "*"
                 if (s.isEmpty()) {
+                    System.out.println(s + "!=" + p);
                     return false;
                 } else {
-                    if (s.charAt(0) != p.charAt(0) && p.charAt(0) != '.') {
-                        return false;
+                    if (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.') {
+                        return isMatch(s.substring(1), p.substring(1));
                     } else {
-                        if (s.length() > 1) {
-                            return isMatch(s.substring(1), p.substring(1));
-                        } else { //s.length == 1
-                            if (p.length() == 3 && p.charAt(2) == '*') { //s=a pattern= ab*
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        }
+                        System.out.println(s + "!=" + p);
+                        return false;
                     }
                 }
             }
-        } else { //p.length >= 2
+        } else { //p.length <= 1
             if (s.length() != p.length()) {
+                System.out.println(s + "!=" + p);
                 return false;
             } else {
                 for (int i = 0; i < s.length(); i++) {
                     if (s.charAt(i) != p.charAt(i) && p.charAt(i) != '.') {
+                        System.out.println(s + "!=" + p);
                         return false;
                     }
                 }
+                //System.out.println(s + "==" + p);
                 return true;
             }
         }
@@ -319,6 +370,24 @@ public class SimpleRegExp {
             return true;
         } else {
             return false;
+        }
+    }
+    public boolean isMatch(String text, String pattern) {
+        if (pattern.isEmpty()) return text.isEmpty();
+        boolean first_match =
+                (!text.isEmpty() &&
+                        (pattern.charAt(0) == text.charAt(0) ||
+                                pattern.charAt(0) == '.'));
+
+        if (pattern.length() >= 2 && pattern.charAt(1) == '*') {
+            return (
+                    isMatch(text, pattern.substring(2)) ||
+                            (first_match && isMatch(text.substring(1), pattern))
+            );
+        } else {
+            return (
+                    first_match && isMatch(text.substring(1), pattern.substring(1))
+            );
         }
     }
 }
