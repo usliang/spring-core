@@ -111,6 +111,10 @@ public class SimpleRegExp {
         pattern = "a*b*c*";
         assert(sr.isMatch(str, pattern));
 
+        str = "";
+        pattern = "a*b*c";
+        assert(!sr.isMatch(str, pattern));
+
         str = "aabcbcbcaccbcaabc";
         pattern = ".*a*aa*.*b*.c*.*a*";
         assert(sr.isMatch(str, pattern));
@@ -125,7 +129,35 @@ public class SimpleRegExp {
         str = "b";
         pattern = "bc*a*";
         assert(sr.isMatch(str, pattern));
-
+    }
+    public boolean isPatternMatchEmpty(String pattern) {
+        if (pattern.length() % 2 != 0) {
+            return false;
+        }
+        for (int i = 1; i < pattern.length(); i=i+2) {
+            if (pattern.charAt(i) != '*') {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean isMatch(String text, String pattern) {
+        if ( text.isEmpty() ) {
+            if (pattern.isEmpty()) {
+                return true;
+            } else {
+                return isPatternMatchEmpty(pattern);
+            }
+        } else if (pattern.isEmpty()) {
+            return false;
+        }
+        //if  here text != empty && patter != empty;
+        boolean firstMatch = text.charAt(0) == pattern.charAt(0) || pattern.charAt(0) == '.';
+        if (pattern.length() >= 2 && pattern.charAt(1) == '*') {
+            return  isMatch(text, pattern.substring(2)) || firstMatch && isMatch(text.substring(1), pattern);
+        } else {
+            return firstMatch && isMatch(text.substring(1), pattern.substring(1));
+        }
     }
     public boolean isAnyMatch(String pattern) {
         return pattern.equalsIgnoreCase(".*");
@@ -372,7 +404,7 @@ public class SimpleRegExp {
             return false;
         }
     }
-    public boolean isMatch(String text, String pattern) {
+    public boolean isMatchR(String text, String pattern) {
         if (pattern.isEmpty()) return text.isEmpty();
         boolean first_match =
                 (!text.isEmpty() &&

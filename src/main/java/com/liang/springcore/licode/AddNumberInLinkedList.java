@@ -16,6 +16,12 @@ public class AddNumberInLinkedList {
             this.next = next;
         }
 
+        @Override
+        public String toString() {
+            return "ListNode{" +
+                    "val=" + val +
+                    '}';
+        }
     }
     public void newNode(ListNode head) {
         head.next = new ListNode(1, null);
@@ -26,9 +32,8 @@ public class AddNumberInLinkedList {
         adder.newNode(head);
 
         ListNode linKNode1 = new ListNode(9, null);
-        ListNode result;
-        //ListNode result = adder.addTwoNumbers(linKNode1, linKNode1);
-        //System.out.println(result);
+        ListNode result = adder.addTwoNumbers(linKNode1, linKNode1, 0);
+        System.out.println(result);
 
         linKNode1 = new ListNode(9, null);
         linKNode1 = new ListNode(9, linKNode1);
@@ -42,14 +47,16 @@ public class AddNumberInLinkedList {
         linKNode1 = new ListNode(1, linKNode1);
 
         ListNode linKNode2 = new ListNode(9, null);
-        //result = adder.addTwoNumbers(linKNode1, linKNode2);
+        result = adder.addTwoNumbers(linKNode1, linKNode2, 0);
+        System.out.println(result);
 
         ListNode linKNode3 = adder.buildListNode(9, 4, 2);
         ListNode linKNode4 = adder.buildListNode(9, 4, 6, 5);
-        result = adder.addTwoNumbers(linKNode3, linKNode4);
+        result = adder.addTwoNumbers(linKNode3, linKNode4, 0);
+        System.out.println(result);
 
     }
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
         if (l1 == null) {
             return l2;
         }
@@ -122,6 +129,34 @@ public class AddNumberInLinkedList {
         }
         cursor.val = sum;
         return carry;
+    }
+
+    public ListNode addTwoNumbers(ListNode node1, ListNode node2, int carry) {
+        ListNode head = new ListNode();
+        ListNode next = null;
+
+        int num1 = node1==null?0:node1.val;
+        int num2 = node2==null?0:node2.val;
+
+        int sum = num1 + num2 + carry;
+        if (sum > 9) {
+            sum = sum - 10;
+            carry = 1;
+        } else {
+            carry = 0;
+        }
+        head.val = sum;
+        if (node1 != null) {
+            node1 = node1.next;
+        }
+        if (node2 != null) {
+            node2 = node2.next;
+        }
+        if (node1 != null || node2 != null || carry != 0) {
+            next = addTwoNumbers(node1, node2, carry);
+        }
+        head.next = next;
+        return head;
     }
 
 }
