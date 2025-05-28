@@ -159,4 +159,21 @@ public class AddNumberInLinkedList {
         return head;
     }
 
+    /*
+    Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying
+    the values in the list's nodes (i.e., only nodes themselves may be changed.)
+     */
+    public ListNode swapPairs(ListNode head) {
+        if (head == null) {
+            return head;
+        } else if (head.next == null) {
+            return head;
+        } else {
+            ListNode newHead = head.next;
+            ListNode rest = newHead.next;
+            newHead.next = head;
+            head.next = swapPairs(rest);
+            return newHead;
+        }
+    }
 }
