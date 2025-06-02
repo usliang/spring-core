@@ -16,7 +16,7 @@ public class SimpleCalculatorV2 {
             } else {
                 String num1 = getNumber(s, 1);
                 if (num1.length() + 1 == s.length()) {
-                    return -Integer.parseInt(num1);
+                    return -Integer.parseInt(removeSpaces(num1));
                 }
                 char op = s.charAt(num1.length()+1);
                 String num2 = getNumber(s, num1.length()+2);
