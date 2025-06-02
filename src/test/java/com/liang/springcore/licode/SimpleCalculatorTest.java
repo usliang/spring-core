@@ -237,6 +237,17 @@ class SimpleCalculatorTest {
     }
 
     @Test
+    void calculate13_2() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = "1-1-3-6+1";
+        result = calculator.calculate(s);
+        assertEquals(-8, result);
+    }
+
+    @Test
     void calculate14() {
         SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;

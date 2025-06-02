@@ -17,15 +17,8 @@ public class SimpleCalculatorV2 {
                 String num1 = getNumber(s, 1);
                 if (num1.length() + 1 == s.length()) {
                     return -Integer.parseInt(removeSpaces(num1));
-                }
-                char op = s.charAt(num1.length()+1);
-                String num2 = getNumber(s, num1.length()+2);
-                if (op == '+') {
-                    return -Integer.parseInt(removeSpaces(num1)) + Integer.parseInt(removeSpaces(num2)) +
-                            calculate (s.substring(num1.length()+num2.length()+2));
                 } else {
-                    return -Integer.parseInt(removeSpaces(num1)) - Integer.parseInt(removeSpaces(num2)) +
-                            calculate (s.substring(num1.length()+num2.length()+2));
+                    return -Integer.parseInt(removeSpaces(num1)) + calculate(s.substring(num1.length() + 1));
                 }
             }
 
@@ -37,16 +30,9 @@ public class SimpleCalculatorV2 {
         } else { //a, a+b or a-b
             String num1 = getNumber(s, 0);
             if (num1.length() == s.length()) {
-                return Integer.parseInt(num1);
-            }
-            char op = s.charAt(num1.length());
-            String num2 = getNumber(s, num1.length()+1);
-            if (op == '+') {
-                return Integer.parseInt(removeSpaces(num1)) + Integer.parseInt(removeSpaces(num2)) +
-                        calculate (s.substring(num1.length()+num2.length()+1));
+                return Integer.parseInt(removeSpaces(num1));
             } else {
-                return Integer.parseInt(removeSpaces(num1)) - Integer.parseInt(removeSpaces(num2)) +
-                        calculate (s.substring(num1.length()+num2.length()+1));
+                return Integer.parseInt(removeSpaces(num1)) + calculate(s.substring(num1.length()));
             }
         }
     }
