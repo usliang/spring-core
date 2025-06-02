@@ -8,7 +8,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate1() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -18,8 +18,63 @@ class SimpleCalculatorTest {
     }
 
     @Test
+    void calculate1_2() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = "  ";
+        result = calculator.calculate(s);
+        assertEquals(0, result);
+    }
+
+    @Test
+    void calculate1_3() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = "1";
+        result = calculator.calculate(s);
+        assertEquals(1, result);
+    }
+
+    @Test
+    void calculate1_4() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = "123";
+        result = calculator.calculate(s);
+        assertEquals(123, result);
+    }
+
+    @Test
+    void calculate1_5() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = "-1";
+        result = calculator.calculate(s);
+        assertEquals(-1, result);
+    }
+
+    @Test
+    void calculate1_6() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = "-123";
+        result = calculator.calculate(s);
+        assertEquals(-123, result);
+    }
+
+    @Test
     void calculate2() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -30,7 +85,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate3() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -40,8 +95,19 @@ class SimpleCalculatorTest {
     }
 
     @Test
+    void calculate3_1() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s="(-20)";
+        result = calculator.calculate(s);
+        assertEquals(-20, result);
+    }
+
+    @Test
     void calculate4() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -52,7 +118,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate5() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -63,7 +129,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate6() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -74,7 +140,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate7() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -85,7 +151,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate8() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -95,8 +161,19 @@ class SimpleCalculatorTest {
     }
 
     @Test
+    void calculate8_1() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = " 1  +   1 ";
+        result = calculator.calculate(s);
+        assertEquals(2, result);
+    }
+
+    @Test
     void calculate9() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -107,7 +184,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate10() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -118,7 +195,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate11() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -128,7 +205,7 @@ class SimpleCalculatorTest {
     }
     @Test
     void calculate12() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -139,7 +216,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate13() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -150,7 +227,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate14() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -161,7 +238,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate15() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -172,7 +249,7 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate16() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
@@ -184,13 +261,25 @@ class SimpleCalculatorTest {
 
     @Test
     void calculate17() {
-        SimpleCalculator calculator = new SimpleCalculator();
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
         int result;
         // test edge case
         s = "((1+1)+(2+2)-6)-(3+4)";
         result = calculator.calculate(s);
         assertEquals(-7, result);
+
+    }
+
+    @Test
+    void calculate17_1() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = "-(((1+1)+(2+2)-6)-(3+4))";
+        result = calculator.calculate(s);
+        assertEquals(7, result);
 
     }
 }
