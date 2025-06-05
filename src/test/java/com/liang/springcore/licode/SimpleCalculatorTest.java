@@ -304,4 +304,26 @@ class SimpleCalculatorTest {
         assertEquals(7, result);
 
     }
+
+    @Test
+    void calculate18() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = "- (3 + (4 + 5))";
+        result = calculator.calculate(s);
+        assertEquals(-12, result);
+    }
+
+    @Test
+    void calculate19() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = "(7)-(0)+(4)";
+        result = calculator.calculate(s);
+        assertEquals(11, result);
+    }
 }

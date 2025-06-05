@@ -7,32 +7,34 @@ public class SimpleCalculatorV2 {
 
     }
     public int calculate(String s) {
+        s = removeSpaces(s);
         if (s.isEmpty()) {
             return 0;
         }
         if (s.charAt(0)=='-') {
             if (s.charAt(1)=='(') {
-                return -calculate(s.substring(1));
+                String subNoBracket = getNumberBeforeRightBracket(s, 2);
+                return -calculate(subNoBracket) + calculate(s.substring(subNoBracket.length() + 3));
             } else {
                 String num1 = getNumber(s, 1);
                 if (num1.length() + 1 == s.length()) {
-                    return -Integer.parseInt(removeSpaces(num1));
+                        return -Integer.parseInt(num1);
                 } else {
-                    return -Integer.parseInt(removeSpaces(num1)) + calculate(s.substring(num1.length() + 1));
+                    return -Integer.parseInt(num1) + calculate(s.substring(num1.length() + 1));
                 }
             }
 
         } else if (s.charAt(0)=='(') {
             String subNoBracket = getNumberBeforeRightBracket(s, 1);
             return calculate(subNoBracket) + calculate(s.substring(subNoBracket.length() + 2));
-        } else if (s.charAt(0)==' ' || s.charAt(0)=='+') {
+        } else if (s.charAt(0)=='+') {
             return calculate(s.substring(1));
         } else { //a, a+b or a-b
             String num1 = getNumber(s, 0);
             if (num1.length() == s.length()) {
-                return Integer.parseInt(removeSpaces(num1));
+                return Integer.parseInt(num1);
             } else {
-                return Integer.parseInt(removeSpaces(num1)) + calculate(s.substring(num1.length()));
+                return Integer.parseInt(num1) + calculate(s.substring(num1.length()));
             }
         }
     }
