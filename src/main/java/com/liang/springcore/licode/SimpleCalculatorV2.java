@@ -8,6 +8,66 @@ public class SimpleCalculatorV2 {
         return calculateR(removeSpaces(s));
     }
 
+    public int calculateN(String s) {
+        if (s.isEmpty()) {
+            return 0;
+        }
+        int counter = 0;
+        int result = 0;
+        while (counter < s.length()) {
+            if (s.charAt(counter)=='-') {
+                if (s.charAt(counter + 1) == '(') {
+                    String subNoBracket = getNumberBeforeRightBracket(s, counter + 2);
+                    result = result - calNoBracket(subNoBracket);
+                    counter = counter + subNoBracket.length() + 3;
+                } else {
+                    String num1 = getNumber(s, counter + 1);
+                    result = result - Integer.parseInt(num1);
+                    counter = counter + 1 + num1.length();
+                }
+            } else if (s.charAt(counter) == '+') {
+                if (s.charAt(counter + 1) == '(') {
+                    String subNoBracket = getNumberBeforeRightBracket(s, counter + 2);
+                    result = result + calNoBracket(subNoBracket);
+                    counter = counter + subNoBracket.length() + 3;
+                } else {
+                    String num1 = getNumber(s, counter + 1);
+                    result = result + Integer.parseInt(num1);
+                    counter = counter + 1 + num1.length();
+                }
+            } else if (s.charAt(counter) == '(') {
+                String subNoBracket = getNumberBeforeRightBracket(s, counter + 1);
+                result = result + calNoBracket(subNoBracket);
+                counter = counter + 1 + subNoBracket.length();
+            }
+        }
+        return result;
+    }
+
+    public int calNoBracket(String s) {
+        if (s.isEmpty()) {
+            return 0;
+        }
+        int counter = 0;
+        int result = 0;
+        while (counter < s.length()) {
+            if (s.charAt(counter) == '-') {
+                String num1 = getNumber(s, counter + 1);
+                result = result - Integer.parseInt(num1);
+                counter = counter + 1 + num1.length();
+            } else if (s.charAt(counter) == '+') {
+                String num1 = getNumber(s, counter + 1);
+                result = result + Integer.parseInt(num1);
+                counter = counter + 1 + num1.length();
+            } else {
+                String num1 = getNumber(s, counter);
+                result = result + Integer.parseInt(num1);
+            }
+        }
+        return result;
+    }
+
+
     public int calculateR(String s) {
         if (s.isEmpty()) {
             return 0;
