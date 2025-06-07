@@ -2,6 +2,11 @@ package com.liang.springcore.licode;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SimpleCalculatorTest {
@@ -323,6 +328,19 @@ class SimpleCalculatorTest {
         int result;
         // test edge case
         s = "(7)-(0)+(4)";
+        result = calculator.calculate(s);
+        assertEquals(11, result);
+    }
+
+    @Test
+    void calculate20() throws IOException {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        InputStream inputStream = getClass().getResourceAsStream("/longInput1.txt");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        s = bufferedReader.readLine();
         result = calculator.calculate(s);
         assertEquals(11, result);
     }

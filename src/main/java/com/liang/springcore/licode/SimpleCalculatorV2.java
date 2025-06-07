@@ -1,40 +1,41 @@
 package com.liang.springcore.licode;
 
-import java.util.Stack;
-
 public class SimpleCalculatorV2 {
     public static void main(String[] args) {
 
     }
     public int calculate(String s) {
-        s = removeSpaces(s);
+        return calculateR(removeSpaces(s));
+    }
+
+    public int calculateR(String s) {
         if (s.isEmpty()) {
             return 0;
         }
         if (s.charAt(0)=='-') {
             if (s.charAt(1)=='(') {
                 String subNoBracket = getNumberBeforeRightBracket(s, 2);
-                return -calculate(subNoBracket) + calculate(s.substring(subNoBracket.length() + 3));
+                return -calculateR(subNoBracket) + calculateR(s.substring(subNoBracket.length() + 3));
             } else {
                 String num1 = getNumber(s, 1);
                 if (num1.length() + 1 == s.length()) {
                         return -Integer.parseInt(num1);
                 } else {
-                    return -Integer.parseInt(num1) + calculate(s.substring(num1.length() + 1));
+                    return -Integer.parseInt(num1) + calculateR(s.substring(num1.length() + 1));
                 }
             }
 
         } else if (s.charAt(0)=='(') {
             String subNoBracket = getNumberBeforeRightBracket(s, 1);
-            return calculate(subNoBracket) + calculate(s.substring(subNoBracket.length() + 2));
+            return calculateR(subNoBracket) + calculateR(s.substring(subNoBracket.length() + 2));
         } else if (s.charAt(0)=='+') {
-            return calculate(s.substring(1));
+            return calculateR(s.substring(1));
         } else { //a, a+b or a-b
             String num1 = getNumber(s, 0);
             if (num1.length() == s.length()) {
                 return Integer.parseInt(num1);
             } else {
-                return Integer.parseInt(num1) + calculate(s.substring(num1.length()));
+                return Integer.parseInt(num1) + calculateR(s.substring(num1.length()));
             }
         }
     }
