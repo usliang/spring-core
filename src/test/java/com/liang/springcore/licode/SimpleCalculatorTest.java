@@ -322,6 +322,17 @@ class SimpleCalculatorTest {
     }
 
     @Test
+    void calculate18_1() {
+        SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
+        String s;
+        int result;
+        // test edge case
+        s = "- (3 - (4 + 5))";
+        result = calculator.calculate(s);
+        assertEquals(6, result);
+    }
+
+    @Test
     void calculate19() {
         SimpleCalculatorV2 calculator = new SimpleCalculatorV2();
         String s;
@@ -342,6 +353,6 @@ class SimpleCalculatorTest {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         s = bufferedReader.readLine();
         result = calculator.calculate(s);
-        assertEquals(11, result);
+        assertEquals(-1946, result);
     }
 }

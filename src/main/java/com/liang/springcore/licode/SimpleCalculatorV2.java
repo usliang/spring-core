@@ -5,43 +5,35 @@ public class SimpleCalculatorV2 {
 
     }
     public int calculate(String s) {
-        return calculateR(removeSpaces(s));
+        return calculateN(removeSpaces(s));
     }
 
     public int calculateN(String s) {
         if (s.isEmpty()) {
             return 0;
         }
-        int counter = 0;
-        int result = 0;
-        while (counter < s.length()) {
-            if (s.charAt(counter)=='-') {
-                if (s.charAt(counter + 1) == '(') {
-                    String subNoBracket = getNumberBeforeRightBracket(s, counter + 2);
-                    result = result - calNoBracket(subNoBracket);
-                    counter = counter + subNoBracket.length() + 3;
+        int firstLeft = s.indexOf('(');
+        if (firstLeft == -1) {
+            return  calNoBracket(s);
+        } else {
+            String numberBeforeRightBracket = getNumberBeforeRightBracket(s, firstLeft+1);
+            if (firstLeft == 1) {
+                if (s.charAt(0) == '-') {
+                    return -calculateN(numberBeforeRightBracket) + calculateN(s.substring(firstLeft + numberBeforeRightBracket.length() + 2));
                 } else {
-                    String num1 = getNumber(s, counter + 1);
-                    result = result - Integer.parseInt(num1);
-                    counter = counter + 1 + num1.length();
+                    return calculateN(numberBeforeRightBracket) + calculateN(s.substring(firstLeft + numberBeforeRightBracket.length() + 2));
                 }
-            } else if (s.charAt(counter) == '+') {
-                if (s.charAt(counter + 1) == '(') {
-                    String subNoBracket = getNumberBeforeRightBracket(s, counter + 2);
-                    result = result + calNoBracket(subNoBracket);
-                    counter = counter + subNoBracket.length() + 3;
+            }else if (firstLeft == 0) {
+                return calculateN(numberBeforeRightBracket) + calculateN(s.substring(firstLeft + numberBeforeRightBracket.length() + 2));
+            } else { //firstLeft > 1
+                char sign = s.charAt(firstLeft-1);
+                if (sign == '+') {
+                    return calNoBracket(s.substring(0, firstLeft-1)) + calculateN(numberBeforeRightBracket) + calculateN(s.substring(firstLeft + numberBeforeRightBracket.length() + 2));
                 } else {
-                    String num1 = getNumber(s, counter + 1);
-                    result = result + Integer.parseInt(num1);
-                    counter = counter + 1 + num1.length();
+                    return calNoBracket(s.substring(0, firstLeft-1)) - calculateN(numberBeforeRightBracket) + calculateN(s.substring(firstLeft + numberBeforeRightBracket.length() + 2));
                 }
-            } else if (s.charAt(counter) == '(') {
-                String subNoBracket = getNumberBeforeRightBracket(s, counter + 1);
-                result = result + calNoBracket(subNoBracket);
-                counter = counter + 1 + subNoBracket.length();
             }
         }
-        return result;
     }
 
     public int calNoBracket(String s) {
@@ -62,6 +54,7 @@ public class SimpleCalculatorV2 {
             } else {
                 String num1 = getNumber(s, counter);
                 result = result + Integer.parseInt(num1);
+                counter = counter + num1.length();
             }
         }
         return result;
