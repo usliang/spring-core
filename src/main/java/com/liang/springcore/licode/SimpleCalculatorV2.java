@@ -1,10 +1,53 @@
 package com.liang.springcore.licode;
 
+import java.util.Stack;
+
 public class SimpleCalculatorV2 {
     public static void main(String[] args) {
 
     }
+
     public int calculate(String s) {
+        s=removeSpaces(s);
+        Stack<Integer> stack = new Stack<>();
+        int result = 0;
+        int number = 0;
+        int sign = 1;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if (Character.isDigit(ch)) {
+                number = 0;
+                while (i < s.length() && Character.isDigit(s.charAt(i))) {
+                    number = number * 10 + (s.charAt(i) - '0');
+                    i++;
+                }
+                result += sign * number;
+                i--; // step back because the for-loop will increment
+            } else if (ch == '+') {
+                sign = 1;
+            } else if (ch == '-') {
+                sign = -1;
+            } else if (ch == '(') {
+                // Push current result and sign
+                stack.push(result);
+                stack.push(sign);
+                // Reset for inner expression
+                result = 0;
+                sign = 1;
+            } else if (ch == ')') {
+                int prevSign = stack.pop();
+                int prevResult = stack.pop();
+                result = prevResult + prevSign * result;
+            }
+            // ignore whitespace
+        }
+
+        return result;
+    }
+    
+    public int calculateLi(String s) {
         return calculateN(removeSpaces(s));
     }
 
@@ -17,20 +60,21 @@ public class SimpleCalculatorV2 {
             return  calNoBracket(s);
         } else {
             String numberBeforeRightBracket = getNumberBeforeRightBracket(s, firstLeft+1);
+            String substring = s.substring(firstLeft + numberBeforeRightBracket.length() + 2);
             if (firstLeft == 1) {
                 if (s.charAt(0) == '-') {
-                    return -calculateN(numberBeforeRightBracket) + calculateN(s.substring(firstLeft + numberBeforeRightBracket.length() + 2));
+                    return -calculateN(numberBeforeRightBracket) + calculateN(substring);
                 } else {
-                    return calculateN(numberBeforeRightBracket) + calculateN(s.substring(firstLeft + numberBeforeRightBracket.length() + 2));
+                    return calculateN(numberBeforeRightBracket) + calculateN(substring);
                 }
             }else if (firstLeft == 0) {
-                return calculateN(numberBeforeRightBracket) + calculateN(s.substring(firstLeft + numberBeforeRightBracket.length() + 2));
+                return calculateN(numberBeforeRightBracket) + calculateN(substring);
             } else { //firstLeft > 1
                 char sign = s.charAt(firstLeft-1);
                 if (sign == '+') {
-                    return calNoBracket(s.substring(0, firstLeft-1)) + calculateN(numberBeforeRightBracket) + calculateN(s.substring(firstLeft + numberBeforeRightBracket.length() + 2));
+                    return calNoBracket(s.substring(0, firstLeft-1)) + calculateN(numberBeforeRightBracket) + calculateN(substring);
                 } else {
-                    return calNoBracket(s.substring(0, firstLeft-1)) - calculateN(numberBeforeRightBracket) + calculateN(s.substring(firstLeft + numberBeforeRightBracket.length() + 2));
+                    return calNoBracket(s.substring(0, firstLeft-1)) - calculateN(numberBeforeRightBracket) + calculateN(substring);
                 }
             }
         }
@@ -132,5 +176,15 @@ public class SimpleCalculatorV2 {
             }
         }
         return sb.toString();
+    }
+
+    
+
+    public int calculateStack(Stack<Character> stack) {
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+        return calNoBracket(sb.reverse().toString());
     }
 }
