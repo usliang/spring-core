@@ -18,7 +18,7 @@ public class ArrayPartitioner {
         if (nums.isEmpty()) {
             return false;
         }
-        if (verifyPartition(nums, target) && verifyPartition(p, target)) {
+        if (!p.isEmpty() && verifyPartition(nums, target) && verifyPartition(p, target)) {
             return true;
         }
         boolean found = false;
