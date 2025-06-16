@@ -68,4 +68,11 @@ class ArrayPartitionerTest {
         ArrayPartitioner arrayPartitioner = new ArrayPartitioner();
         assertTrue(arrayPartitioner.checkEqualPartitions(nums, 1512));
     }
+    //40,15,92,65,42,7,80,17,46,68,78,48
+    @Test
+    void checkEqualPartitions8() {
+        int[] nums = new int[]{40,15,92,65,42,7,80,17,46,68,78,48};
+        ArrayPartitioner arrayPartitioner = new ArrayPartitioner();
+        assertTrue(arrayPartitioner.checkEqualPartitions(nums, 4098931200L));
+    }
 }
