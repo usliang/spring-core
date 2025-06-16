@@ -1,28 +1,6 @@
 package com.liang.springcore.licode;
 
 public class AddNumberInLinkedList {
-    static class ListNode {
-        int val;
-        ListNode next;
-        public ListNode() {
-            val = -1;
-            next = null;
-        }
-        public ListNode(int x) {
-            val = x;
-        }
-        public ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
-
-        @Override
-        public String toString() {
-            return "ListNode{" +
-                    "val=" + val +
-                    '}';
-        }
-    }
     public void newNode(ListNode head) {
         head.next = new ListNode(1, null);
     }
