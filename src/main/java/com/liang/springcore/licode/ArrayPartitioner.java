@@ -12,9 +12,28 @@ public class ArrayPartitioner {
             }
             numList.add(i);
         }
-        return partition(numList, target, p1);
+        return partition(nums, numList, target, p1, 0);
     }
-    public boolean partition(List<Integer> nums, long target,  List<Integer> p) {
+
+    public boolean partition(int[] nums, List<Integer> numsList, long target,  List<Integer> p, int index) {
+        if (index == nums.length) {
+            return false;
+        }
+        if (!p.isEmpty() && verifyPartition(numsList, target) && verifyPartition(p, target)) {
+            return true;
+        }
+        p.add(nums[index]);
+        numsList.remove(Integer.valueOf(nums[index]));
+        if (partition(nums, numsList, target, p, index + 1)) {
+            return true;
+        }
+
+        numsList.add(p.get(p.size() - 1));
+        p.remove(p.size() - 1);
+        return partition(nums, numsList, target, p, index + 1);
+    }
+
+    public boolean partition2(List<Integer> nums, long target,  List<Integer> p) {
         if (nums.isEmpty()) {
             return false;
         }
@@ -33,7 +52,7 @@ public class ArrayPartitioner {
             }
             List<Integer> np = new ArrayList<>(p);
             np.add(num);
-            if (partition(remain, target, np)) {
+            if (partition2(remain, target, np)) {
                 found = true;
                 break;
             }
