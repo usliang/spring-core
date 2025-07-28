@@ -39,4 +39,15 @@ class FabCalInteractiveTest {
         Exception ex = assertThrows(IllegalArgumentException.class, () -> fabCal.calculate(-1));
         assertEquals("n should be greater than 0", ex.getMessage());
     }
+
+    @Test
+    void testLargeValue1000() {
+        long start = System.currentTimeMillis();
+        BigInteger result = fabCal.calculate(1000);
+        long elapsed = System.currentTimeMillis() - start;
+
+        System.out.println("Fibonacci(1000) computed in " + elapsed + " ms. Digits: " + result.toString().length());
+        assertTrue(result.compareTo(BigInteger.ZERO) > 0);
+        assertTrue(elapsed < 3000);
+    }
 }
