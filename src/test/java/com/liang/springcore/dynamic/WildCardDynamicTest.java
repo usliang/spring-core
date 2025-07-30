@@ -1,131 +1,122 @@
-package com.liang.springcore.licode;
+package com.liang.springcore.dynamic;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class WildCardMatcherTest {
-    WildCardMatcher wildCardMatcher = new WildCardMatcher();
+class WildCardDynamicTest {
 
-    @Test
-    void removeUnneededStars1() {
-        assertEquals("*", wildCardMatcher.removeUnneededStars("*****"));
-    }
-
-    @Test
-    void removeUnneededStars2() {
-        assertEquals("a*b*", wildCardMatcher.removeUnneededStars("a*****b**"));
-    }
+    WildCardDynamic wildCardDynamic = new WildCardDynamic();
 
     @Test
     void isMatchCase1() {
-        assertTrue(wildCardMatcher.isMatch("", ""));
+        assertTrue(wildCardDynamic.isMatch("", ""));
     }
     @Test
     void isMatchCase2() {
-        assertTrue(wildCardMatcher.isMatch("", "*"));
+        assertTrue(wildCardDynamic.isMatch("", "*"));
     }
 
     @Test
     void isMatchCase3() {
-        assertTrue(wildCardMatcher.isMatch("", "**"));
+        assertTrue(wildCardDynamic.isMatch("", "**"));
     }
 
     @Test
     void isMatchCase4() {
-        assertTrue(wildCardMatcher.isMatch("a", "a"));
+        assertTrue(wildCardDynamic.isMatch("a", "a"));
     }
 
     @Test
     void isMatchCase5() {
-        assertTrue(wildCardMatcher.isMatch("a", "?"));
+        assertTrue(wildCardDynamic.isMatch("a", "?"));
     }
 
     @Test
     void isMatchCase6() {
-        assertTrue(wildCardMatcher.isMatch("a", "*"));
+        assertTrue(wildCardDynamic.isMatch("a", "*"));
     }
 
     @Test
     void isMatchCase7() {
-        assertTrue(wildCardMatcher.isMatch("a", "**"));
+        assertTrue(wildCardDynamic.isMatch("a", "**"));
     }
 
     @Test
     void isMatchCase8() {
-        assertTrue(wildCardMatcher.isMatch("ab", "*"));
+        assertTrue(wildCardDynamic.isMatch("ab", "*"));
     }
 
     @Test
     void isMatchCase9() {
-        assertTrue(wildCardMatcher.isMatch("abc", "*c"));
+        assertTrue(wildCardDynamic.isMatch("abc", "*c"));
     }
 
     @Test
     void isMatchCase10() {
-        assertTrue(wildCardMatcher.isMatch("abcd", "*cd"));
+        assertTrue(wildCardDynamic.isMatch("abcd", "*cd"));
     }
 
     @Test
     void isMatchCase11() {
-        assertTrue(wildCardMatcher.isMatch("abcd", "**d"));
+        assertTrue(wildCardDynamic.isMatch("abcd", "**d"));
     }
 
     @Test
     void isMatchCase12() {
-        assertTrue(wildCardMatcher.isMatch("abcd", "**?d"));
+        assertTrue(wildCardDynamic.isMatch("abcd", "**?d"));
     }
 
     @Test
     void isMatchCase13() {
-        assertTrue(wildCardMatcher.isMatch("abcd", "a*?d"));
+        assertTrue(wildCardDynamic.isMatch("abcd", "a*?d"));
     }
 
     @Test
     void isMatchCase14() {
-        assertTrue(wildCardMatcher.isMatch("abcefd", "a?*d"));
+        assertTrue(wildCardDynamic.isMatch("abcefd", "a?*d"));
     }
 
     @Test
     void isMatchCase15() {
-        assertFalse(wildCardMatcher.isMatch("a", "b"));
+        assertFalse(wildCardDynamic.isMatch("a", "b"));
     }
 
     @Test
     void isMatchCase16() {
-        assertFalse(wildCardMatcher.isMatch("ac", "ab"));
+        assertFalse(wildCardDynamic.isMatch("ac", "ab"));
     }
 
     @Test
     void isMatchCase17() {
-        assertFalse(wildCardMatcher.isMatch("abbcd", "*?c"));
+        assertFalse(wildCardDynamic.isMatch("abbcd", "*?c"));
     }
 
     @Test
     void isMatchCase18() {
-        assertTrue(wildCardMatcher.isMatch("adceb", "a*b"));
+        assertTrue(wildCardDynamic.isMatch("adceb", "a*b"));
     }
 
     @Test
     void isMatchCase19() {
-        assertTrue(wildCardMatcher.isMatch("adceb", "*a*b"));
+        assertTrue(wildCardDynamic.isMatch("adceb", "*a*b"));
     }
 
     @Test
     void isMatchCase20() {
-        assertFalse(wildCardMatcher.isMatch("babbbbaabababaabbababaababaabbaabababbaaababbababaaaaaabbabaaaabababbabbababbbaaaababbbabbbbbbbbbbaabbb", "b**bb**a**bba*b**a*bbb**aba***babbb*aa****aabb*bbb***a"));
+        assertFalse(wildCardDynamic.isMatch("babbbbaabababaabbababaababaabbaabababbaaababbababaaaaaabbabaaaabababbabbababbbaaaababbbabbbbbbbbbbaabbb", "b**bb**a**bba*b**a*bbb**aba***babbb*aa****aabb*bbb***a"));
     }
 
     @Test
     void isMatchCase21() {
         String s = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         String p = "*aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa*";
-        assertFalse(wildCardMatcher.isMatch(s, p));
+        assertFalse(wildCardDynamic.isMatch(s, p));
     }
 
     @Test
     void isMatchCase22() {
-        assertTrue(wildCardMatcher.isMatch("a", "*a*"));
+        assertTrue(wildCardDynamic.isMatch("a", "*a*"));
     }
+
 }
