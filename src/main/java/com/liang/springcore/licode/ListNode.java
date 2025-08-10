@@ -18,8 +18,11 @@ public class ListNode {
 
     @Override
     public String toString() {
-        return "ListNode{" +
-                "val=" + val +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        for (ListNode p = this; p != null; p = p.next) {
+            if (sb.length() > 0) sb.append(" -> ");
+            sb.append(p.val);
+        }
+        return sb.toString();
     }
 }
