@@ -8,8 +8,7 @@ class PowerOfFourTest {
     PowerOfFour powerOfFour = new PowerOfFour();
     @Test
     void isPowerOfFour1() {
-        int n = 1073741824 * 4;
-        assertTrue(powerOfFour.isPowerOfFour(1));
+       assertTrue(powerOfFour.isPowerOfFour(1));
     }
 
     @Test
