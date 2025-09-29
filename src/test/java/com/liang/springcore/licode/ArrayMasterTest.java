@@ -104,4 +104,111 @@ class ArrayMasterTest {
         assertArrayEquals(new int[] {7, 8, 9, 1, 2, 3, 4, 5, 6}, nums);
     }
 
+    @Test
+    void  intersect1() {
+        int[] nums1 = new int[] { 1,2,2,1 };
+        int[] nums2 = new int[] { 2,2 };
+        int[] result = arrayMaster.intersect(nums1, nums2);
+        assertArrayEquals(new int[] { 2, 2 }, result);
+    }
+
+    @Test
+    void  intersect2() {
+        int[] nums1 = new int[] { 4,9,5 };
+        int[] nums2 = new int[] { 9,4,9,8,4 };
+        int[] result = arrayMaster.intersect(nums1, nums2);
+        assertArrayEquals(new int[] { 4, 9 }, result);
+    }
+
+    @Test
+    void plusOne1() {
+        int[] nums = new int[] { 1 };
+        int[] res = arrayMaster.plusOne(nums);
+        assertArrayEquals(new int[] { 2 }, res);
+    }
+
+    @Test
+    void plusOne2() {
+        int[] nums = new int[] { 9 };
+        int[] res = arrayMaster.plusOne(nums);
+        assertArrayEquals(new int[] { 1, 0 }, res);
+    }
+
+    @Test
+    void plusOne3() {
+        int[] nums = new int[] {1, 9 };
+        int[] res = arrayMaster.plusOne(nums);
+        assertArrayEquals(new int[] { 2, 0 }, res);
+    }
+
+    @Test
+    void plusOne4() {
+        int[] nums = new int[] {1, 3 };
+        int[] res = arrayMaster.plusOne(nums);
+        assertArrayEquals(new int[] { 1, 4 }, res);
+    }
+
+    @Test
+    void plusOne5() {
+        int[] nums = new int[] {1, 4,  9 };
+        int[] res = arrayMaster.plusOne(nums);
+        assertArrayEquals(new int[] { 1, 5, 0 }, res);
+    }
+
+    @Test
+    void plusOne6() {
+        int[] nums = new int[] {9, 9,  9 };
+        int[] res = arrayMaster.plusOne(nums);
+        assertArrayEquals(new int[] { 1, 0, 0, 0 }, res);
+    }
+
+    @Test
+    void moveZeroes1() {
+        int[] nums = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        arrayMaster.moveZeroes(nums);
+        assertArrayEquals(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, nums);
+    }
+
+    @Test
+    void moveZeroes2() {
+        int[] nums = new int[] { 0, 2, 3, 4, 5, 6, 7, 8, 9 };
+        arrayMaster.moveZeroes(nums);
+        assertArrayEquals(new int[] { 2, 3, 4, 5, 6, 7, 8, 9, 0 }, nums);
+    }
+
+    @Test
+    void moveZeroes3() {
+        int[] nums = new int[] { 0, 2, 3, 4, 5, 6, 7, 0, 9 };
+        arrayMaster.moveZeroes(nums);
+        assertArrayEquals(new int[] { 2, 3, 4, 5, 6, 7, 9, 0, 0 }, nums);
+    }
+
+    @Test
+    void moveZeroes4() {
+        int[] nums = new int[] { 0, 0, 1 };
+        arrayMaster.moveZeroes(nums);
+        assertArrayEquals(new int[] { 1, 0, 0 }, nums);
+    }
+
+    @Test
+    void moveZeroes5() {
+        int[] nums = new int[] { 1 };
+        arrayMaster.moveZeroes(nums);
+        assertArrayEquals(new int[] { 1 }, nums);
+    }
+
+    @Test
+    void moveZeroes6() {
+        int[] nums = new int[] { 0, 2, 3, 4, 5, 6, 7, 0, 0 };
+        arrayMaster.moveZeroes(nums);
+        assertArrayEquals(new int[] { 2, 3, 4, 5, 6, 7, 0, 0, 0 }, nums);
+    }
+
+    @Test
+    void moveZeroes7() {
+        int[] nums = new int[] { 0,1,0 };
+        arrayMaster.moveZeroes(nums);
+        assertArrayEquals(new int[] { 1, 0, 0 }, nums);
+    }
+
 }
