@@ -226,13 +226,13 @@ public class ArrayMaster {
         }
         if (zeroPositions.isEmpty()) { // no zero
             return;
-        } else if (zeroPositions.size() == 1) {
-            shiftZeroes(nums, zeroPositions.get(0), nums.length);
-        }  else {
-            for (int i = 0; i < zeroPositions.size() -1; i++) {
-                shiftZeroes(nums, zeroPositions.get(i), zeroPositions.get(i+1));
-            }
-            shiftZeroes(nums, zeroPositions.getLast(), nums.length);
+        }
+        for (int i = 0; i < zeroPositions.size() - 1; i++) {
+            shiftZeroes(nums, zeroPositions.get(i), zeroPositions.get(i + 1));
+        }
+        int begin = zeroPositions.getLast();
+        if (begin < zeroPositions.size() - 1) {
+            shiftZeroes(nums, begin, nums.length);
         }
     }
 
