@@ -1,6 +1,9 @@
 package com.liang.springcore.licode;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -211,4 +214,114 @@ class ArrayMasterTest {
         assertArrayEquals(new int[] { 1, 0, 0 }, nums);
     }
 
+    @Test
+    void moveZeroes8() {
+        int[] nums = new int[] { 0,0,0,0,-25503,20486,-94356,0,-20253,80325,0,62558,-41932,-63525,0,0,0,0,0,-16051,
+                -896,0,-7783,0,0,-26335,19267,-33350,0,73475,0,82325,68084,-60140,0,78072,98839,0,0,-83121,0,-32293,
+                16421,48223,0,-8846,73852,-48827,12788,-68476,0,0 };
+        int[] expected = new int[] {-25503,20486,-94356,-20253,80325,62558,-41932,-63525,-16051,-896,-7783,-26335,
+                19267,-33350,73475,82325,68084,-60140,78072,98839,-83121,-32293,16421,48223,
+                -8846,73852,-48827,12788,-68476,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        arrayMaster.moveZeroes(nums);
+        assertArrayEquals(expected, nums);
+    }
+
+    @Test
+    void twoSum1() {
+        int[] nums = new int[] { 2,7,11,15};
+        int[] result = arrayMaster.twoSum(nums, 9);
+        assertArrayEquals(new int[] { 0, 1 }, result);
+    }
+
+    @Test
+    void twoSum2() {
+        int[] nums = new int[] { 3,2,4};
+        int[] result = arrayMaster.twoSum(nums, 6);
+        assertArrayEquals(new int[] { 1, 2 }, result);
+    }
+    @Test
+    void twoSum3() {
+        int[] nums = new int[] { 3};
+        int[] result = arrayMaster.twoSum(nums, 3);
+        assertArrayEquals(null, result);
+    }
+
+    @Test
+    void twoSum4() {
+        int[] nums = new int[] {3, 3};
+        int[] result = arrayMaster.twoSum(nums, 6);
+        assertArrayEquals(new int[] { 0, 1 }, result);
+    }
+
+    @Test
+    void twoSum5() {
+        int[] nums = new int[] {3, -3};
+        int[] result = arrayMaster.twoSum(nums, 0);
+        assertArrayEquals(new int[] { 0, 1 }, result);
+    }
+
+    @Test
+    void findZeroBlock0() {
+        int[] nums = new int[] {};
+        List<int[]> list = arrayMaster.findZeroBlock(nums);
+        Assertions.assertEquals(0, list.size());
+    }
+
+    @Test
+    void findZeroBlock1() {
+        int[] nums = new int[] {0, 0, 0};
+        List<int[]> list = arrayMaster.findZeroBlock(nums);
+        Assertions.assertEquals(1, list.size());
+    }
+
+    @Test
+    void findZeroBlock2() {
+        int[] nums = new int[] {0, 0, 1, 0, 0};
+        List<int[]> list = arrayMaster.findZeroBlock(nums);
+        Assertions.assertEquals(2, list.size());
+    }
+
+    @Test
+    void findZeroBlock3() {
+        int[] nums = new int[] {0, 0, 1, 0, 0, 0, 1, 2, 0, 4, 0, 0, 0, 5};
+        List<int[]> list = arrayMaster.findZeroBlock(nums);
+        Assertions.assertEquals(4, list.size());
+        arrayMaster.moveZeroes(nums);
+        assertArrayEquals(new int[] { 1, 1, 2, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, nums);
+    }
+    @Test
+    void isValidSudoku1() {
+        char[][] board = {
+                {'5','3','.','.','7','.','.','.','.'},
+                {'6','.','.','1','9','5','.','.','.'},
+                {'.','9','8','.','.','.','.','6','.'},
+                {'8','.','.','.','6','.','.','.','3'},
+                {'4','.','.','8','.','3','.','.','1'},
+                {'7','.','.','.','2','.','.','.','6'},
+                {'.','6','.','.','.','.','2','8','.'},
+                {'.','.','.','4','1','9','.','.','5'},
+                {'.','.','.','.','8','.','.','7','9'}
+        };
+        //System.out.println(board[0][1]);
+        //System.out.println(board[1][0]);
+        Assertions.assertTrue(arrayMaster.isValidSudoku(board));
+    }
+
+    @Test
+    void isValidSudoku2() {
+        char[][] board = {
+                {'8','3','.','.','7','.','.','.','.'},
+                {'6','.','.','1','9','5','.','.','.'},
+                {'.','9','8','.','.','.','.','6','.'},
+                {'8','.','.','.','6','.','.','.','3'},
+                {'4','.','.','8','.','3','.','.','1'},
+                {'7','.','.','.','2','.','.','.','6'},
+                {'.','6','.','.','.','.','2','8','.'},
+                {'.','.','.','4','1','9','.','.','5'},
+                {'.','.','.','.','8','.','.','7','9'}
+        };
+        //System.out.println(board[0][1]);
+        //System.out.println(board[1][0]);
+        Assertions.assertFalse(arrayMaster.isValidSudoku(board));
+    }
 }

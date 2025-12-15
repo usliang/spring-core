@@ -201,46 +201,224 @@ public class ArrayMaster {
         return res;
     }
 
+    public void moveZeroes(int[] nums) {
+        int cursor = 0;
+        for (int i = 0; i< nums.length; i++) {
+            if (nums[i] != 0) {
+                nums[cursor] = nums[i];
+                cursor++;
+            }
+        }
+        for (int i= cursor; i< nums.length; i++) {
+            nums[i] = 0;
+        }
+    }
+
     public void moveZeroes1(int[] nums) {
         int end = nums.length - 1;
         int begin = 0;
         while (begin < end) {
             if (nums[begin] == 0) {
-                for (int j = begin; j <= end -1; j++) {
-                    nums[j] = nums[j + 1];
+                //find the next non-zero
+                int zeroCount = 1;
+                while ((begin + zeroCount < end) && nums[begin + zeroCount] == 0) {
+                    zeroCount++;
+                    if ((begin + zeroCount) == end + 1) {
+                        return; //all the zero are on the end, we are then
+                    }
                 }
-                nums[end] = 0;
-                end--;
+                for (int j = begin; j <= end - zeroCount; j++) {
+                    nums[j] = nums[j + zeroCount];
+                }
+                //move begin by zero count and stop on
+                for (int i = 0; i< zeroCount; i++) {
+                    begin++;
+                    if (nums[begin] == 0) {
+                        break;
+                    }
+                }
+                for (int i = 0; i< zeroCount; i++) {
+                    nums[end - zeroCount + i + 1] = 0;
+                }
+                end -= zeroCount;
             } else {
                 begin++;
             }
         }
     }
 
-    public void moveZeroes(int[] nums) {
-        List<Integer> zeroPositions = new ArrayList<>();
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == 0) {
-                zeroPositions.add(i);
-            }
-        }
-        if (zeroPositions.isEmpty()) { // no zero
+    public void moveZeroes2(int[] nums) {
+        List<int[]> list = findZeroBlock(nums);
+        if (list.isEmpty()) {
             return;
         }
-        for (int i = 0; i < zeroPositions.size() - 1; i++) {
-            shiftZeroes(nums, zeroPositions.get(i), zeroPositions.get(i + 1));
+        int nextTo = list.getFirst()[0];
+        int totalZero = 0;
+        for (int i = 0; i < list.size() - 1; i++) {
+            int[] current = list.get(i);
+            int[] next = list.get(i+1);
+            int count = next[0] - current[1] -1;
+            int from = current[1] + 1;
+            shiftZeroes(nums, nextTo, from, count);
+            nextTo = nextTo + count;
+            totalZero += (current[1] - current[0] + 1);
         }
-        int begin = zeroPositions.getLast();
-        if (begin < zeroPositions.size() - 1) {
-            shiftZeroes(nums, begin, nums.length);
+        //handle the last group
+        if (list.getLast()[1] != nums.length - 1) {
+            int from = list.getLast()[1] + 1;
+            int count = nums.length - list.getLast()[1] - 1;
+            shiftZeroes(nums, nextTo, from, count);
+        }
+        totalZero += (list.getLast()[1] - list.getLast()[0] + 1);
+        //set zero on the end
+        for (int i = nums.length - totalZero; i<nums.length; i++) {
+            nums[i] = 0;
         }
     }
 
-    public void shiftZeroes(int[] nums, int begin, int end) {
-        for (int i = begin; i < end; i++) {
-            nums[i] = nums[i +1];
+    public List<int[]> findZeroBlock(int[] nums) {
+        //find the consecutive 0 block-- n[0] = the index of the beginning 0; n[1] = the index = ending 0
+        List<int[]> list = new ArrayList<>();
+        int i = 0;
+        while (i < nums.length) {
+            if (nums[i] == 0) {
+                int j = i + 1;
+                while (j < nums.length) {
+                    if (nums[j] != 0) {
+                        list.add(new int[]{i, j-1});
+                        i = j;
+                        break;
+                    } else {
+                        j++;
+                    }
+                }
+                //check if from i to the end are all zero
+                if (j == nums.length) {
+                    list.add(new int[]{i, j-1});
+                    i = j;
+                }
+            } else {
+                i++;
+            }
+
         }
-        nums[end] = 0;
+        return list;
+    }
+
+    public void shiftZeroes(int[] nums, int to, int from, int count) {
+        for (int i = 0; i <count; i++) {
+            nums[to + i] = nums[from +i];
+        }
+    }
+
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                return new int[]{map.get(target - nums[i]), i};
+            }
+            map.put(nums[i], i);
+        }
+        return null;
+    }
+
+    public boolean isValidSudoku1(char[][] board) {
+        HashSet<Character> charsHorizontal = new HashSet<>();
+        HashSet<Character> charsVertical = new HashSet<>();
+        HashSet<Character> charsSubBoard = new HashSet<>();
+
+        final int length = 9;
+        final int subLen = 3;
+        for (int i = 0; i <  length; i++) {
+            for (int j = 0; j<length; j++ ) {
+                char chHorizontal = board[i][j];
+                if (checkSet(chHorizontal, charsHorizontal)) {
+                    return false; //duplicate digit
+                }
+                char chVertical = board[j][i];
+                if (checkSet(chVertical, charsVertical)) {
+                    return  false;
+                }
+            }
+            charsHorizontal.clear();
+            charsVertical.clear();
+        }
+        for (int i =0 ; i <length; i=i+subLen ) {
+            for (int j =0 ; j <length; j=j+subLen ) {
+                System.out.println("row: " + i + " col: " + j);
+                for (int k =0; k< subLen; k++) {
+                    for (int l=0; l<subLen; l++ ){
+                        if (checkSet(board[i+k][j+l], charsSubBoard )) {
+                            return false;
+                        }
+                    }
+                }
+                charsSubBoard.clear();
+            }
+        }
+        return true;
+
+    }
+    public boolean checkSet(char ch, Set<Character> set) {
+        boolean ret = false;
+        if ( ch != '.') {
+            if (set.contains(ch)) {
+                ret = true;
+            } else {
+                set.add(ch);
+            }
+        }
+        return ret;
+    }
+
+    public boolean isValidSudoku(char[][] board) {
+        final int n = 9;
+        final int box = 3;
+
+        // rows + cols
+        for (int i = 0; i < n; i++) {
+            int rowMask = 0;
+            int colMask = 0;
+
+            for (int j = 0; j < n; j++) {
+                // row
+                char r = board[i][j];
+                if (r != '.') {
+                    int bit = 1 << (r - '1');          // '1' -> bit0, '9' -> bit8
+                    if ((rowMask & bit) != 0) return false;
+                    rowMask |= bit;
+                }
+
+                // col
+                char c = board[j][i];
+                if (c != '.') {
+                    int bit = 1 << (c - '1');
+                    if ((colMask & bit) != 0) return false;
+                    colMask |= bit;
+                }
+            }
+        }
+
+        // 3x3 sub-boards
+        for (int r0 = 0; r0 < n; r0 += box) {
+            for (int c0 = 0; c0 < n; c0 += box) {
+                int boxMask = 0;
+
+                for (int dr = 0; dr < box; dr++) {
+                    for (int dc = 0; dc < box; dc++) {
+                        char ch = board[r0 + dr][c0 + dc];
+                        if (ch == '.') continue;
+
+                        int bit = 1 << (ch - '1');
+                        if ((boxMask & bit) != 0) return false;
+                        boxMask |= bit;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
 }
