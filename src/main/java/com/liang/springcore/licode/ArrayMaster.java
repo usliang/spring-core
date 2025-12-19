@@ -421,4 +421,50 @@ public class ArrayMaster {
         return true;
     }
 
+    public void rotate1(int[][] matrix) {
+        if (matrix.length==1) {
+            return;
+        }
+        boolean[][] moved = new boolean[matrix.length][matrix.length];
+        for (int i=0; i< moved.length; i++) {
+            for (int j=0; j<moved.length; j++) {
+                if (moved[i][j]) continue;
+
+                Cell current = new Cell(i, j, matrix[i][j]);
+                while (!moved[current.row()][current.col()]) {
+                    current = moveCell(current, matrix, moved);
+                }
+            }
+        }
+    }
+    public record Cell(int row, int col, int value) {}
+
+    public Cell moveCell(Cell cell, int[][] matrix, boolean[][] moved){
+        //moved to position
+        int row = cell.col;
+        int col = moved.length-cell.row-1;
+        Cell ret = new Cell(row, col, matrix[row][col]);
+        matrix[row][col] = cell.value;
+        moved[cell.row][cell.col] = true;
+        return ret;
+    }
+
+    public void rotate(int[][] matrix) {
+        //transpose
+        for (int i=0; i<matrix.length; i++) {
+            for (int j=i; j<matrix.length; j++) {
+                int temp = matrix[j][i];
+                matrix[j][i] = matrix[i][j];
+                matrix[i][j] = temp;
+            }
+        }
+        //vertical flip
+        for (int i=0; i<matrix.length; i++) {
+            for (int j=0; j<matrix.length/2; j++) {
+                int temp = matrix[i][matrix.length-j-1];
+                matrix[i][matrix.length-j-1] = matrix[i][j];
+                matrix[i][j] = temp;
+            }
+        }
+    }
 }
