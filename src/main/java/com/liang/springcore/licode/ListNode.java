@@ -20,7 +20,7 @@ public class ListNode {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (ListNode p = this; p != null; p = p.next) {
-            if (sb.length() > 0) sb.append(" -> ");
+            if (!sb.isEmpty()) sb.append(" -> ");
             sb.append(p.val);
         }
         return sb.toString();
