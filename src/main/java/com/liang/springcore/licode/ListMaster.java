@@ -1,6 +1,6 @@
 package com.liang.springcore.licode;
 
-import java.util.Stack;
+import java.util.*;
 
 public class ListMaster {
     public void deleteNode(ListNode node) {
@@ -64,7 +64,7 @@ public class ListMaster {
         previous.next=null;
         return newHead;
     }
-    public ListNode reverseList(ListNode head) {
+    public ListNode reverseList3(ListNode head) {
         if (head==null || head.next==null){
             return head;
         } else {
@@ -77,14 +77,14 @@ public class ListMaster {
                 tail = tail.next;
             }
             prev.next=null; // cut the tail node from the list; the tail will be the head
-            head = reverseList(head);
+            head = reverseList3(head);
             tail.next=head;
             return tail;
         }
 
     }
 
-    public ListNode reverseList3(ListNode head) {
+    public ListNode reverseList(ListNode head) {
 
         ListNode cursor = head;
         ListNode prev = null;
@@ -109,5 +109,51 @@ public class ListMaster {
         return newHead;
     }
 
+    public boolean isPalindrome1(ListNode head) {
+        StringBuilder sb = new StringBuilder();
+        ListNode cursor = head;
+        while (cursor!=null) {
+            sb.append(cursor.val);
+            cursor=cursor.next;
+        }
+        String str = sb.toString();
+        int i = 0;
+        int j = str.length()-1;
+        while (i<j){
+            if (str.charAt(i) != str.charAt(j)){
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    public boolean isPalindrome(ListNode head) {
+        if (head.next == null) {
+            return true;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        if (fast != null) {
+            slow=slow.next;
+        }
+
+        ListNode headSecondHalf = reverseList(slow);
+        ListNode headFirstHalf = head;
+
+        while (headSecondHalf !=null && headFirstHalf.val==headSecondHalf.val) {
+            headFirstHalf = headFirstHalf.next;
+            headSecondHalf = headSecondHalf.next;
+        }
+
+        return headSecondHalf==null;
+    }
 
 }

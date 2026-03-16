@@ -69,4 +69,15 @@ class ListMasterTest {
         ListNode head = listMaster.reverseList(root);
         System.out.println(head);
     }
+    @Test
+    void isPalindrome() {
+        ListNode root = new ListNode(1);
+        ListNode node2 = new ListNode(2);
+        //ListNode node3 = new ListNode(2);
+        ListNode node4 = new ListNode(1);
+        root.next=node2;
+        node2.next=node4;
+        //node3.next=node4;
+        assertTrue(listMaster.isPalindrome(root));
+    }
 }
